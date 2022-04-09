@@ -1,15 +1,27 @@
 # Tree Container Format (TCF)
 
-### Root Node
-| Name | Bytes (`Type`) | Description |
-| ------------- | ------------- | ------------- |
-| Tree Size | (ULEB128) | An unsigned value identifying the size of `Tree`. This size value doesn't include the size on or before the `Node ID` field. |
-| Node |  | Node. |
+## Specification
 
 ### Node
 | Name | Bytes (`Type`) | Description |
 | ------------- | ------------- | ------------- |
-| Number of Child Nodes | (ULEB128) | An unsigned value identifying `Number of Child Nodes`. Unless 0, the node is not a leaf node. |
-| Child_i Node Size | (ULEB128) | An unsigned value identifying the size of `Child_i Node`. |
-| Node Data | {Size from parent node} - {Size of all child nodes} | Binary data. |
-| Child_i Node | {`Child_i Node Size`} | Child_i node. |
+| Node ID | (ULEB128) | An unsigned value identifying the ID of `Node`. |
+| Node Size | (ULEB128) | An unsigned value identifying the size of `Node`. |
+| Node Data | { Value of `Node Size` } | Binary data. |
+
+
+#### Node Data
+`Node Data` is either `Leaf Node` or `Internal Node`.
+
+##### Leaf Node
+| Name | Bytes (`Type`) | Description |
+| ------------- | ------------- | ------------- |
+| Raw Data |  | Raw data. |
+
+
+##### Internal Node
+`Internal Node` contains `Node`s for the size of parent node.
+
+| Name | Bytes (`Type`) | Description |
+| ------------- | ------------- | ------------- |
+| Node i |  | Node i. |
